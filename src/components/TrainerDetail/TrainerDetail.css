@@ -2,119 +2,63 @@
     padding: 20px 20px 0;
 }
 
-.trainer-avatar {
+.trainer-content:not(:last-child) {
+    margin-bottom: 50px;
+}
+
+.trainer-content-heading {
+    padding-bottom: 5px;
+    display: block;
+    margin: 0 0 20px;
+    font-size: 24px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    color: var(--text-color);
+}
+
+table {
     width: 100%;
-    min-height: 250px;
+    text-align: center;
+    color: var(--text-color);
+    font-size: 18px;
 }
 
-.trainer-detail-infor {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.trainer-name, 
-.trainer-sex, 
-.trainer-birthday, 
-.trainer-phone, 
-.trainer-height, 
-.trainer-weight, 
-.trainer-account, 
-.trainer-password,
-.trainer-address {
+table th {
+    color: var(--text-color);
     font-size: 20px;
-    font-weight: 400;
-    margin: 0;
-}
-
-.trainer-name-title,
-.trainer-sex-title,
-.trainer-birthday-title, 
-.trainer-phone-title, 
-.trainer-height-title, 
-.trainer-weight-title, 
-.trainer-account-title, 
-.trainer-password-title,
-.trainer-address-title {
-    font-size: 22px;
     font-weight: 500;
-    margin-right: 20px;
-} 
-
-
-.trainer-detail-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--primary-color);
-    height: 60px;
 }
 
-.trainer-heading {
-    color: white;
-    font-size: 25px;
-    font-weight: 500;
-    flex: 1;
-    margin: 0;
-    text-align: center;
-}
-
-.trainer-schedule {
-    width: 100%;
-    margin: 0 16px;
-}
-
-.trainer-schedule-heading {
-    margin: 40px 0 0;
-    padding: 10px 0;
-    font-size: 25px;
-    font-weight: 500;
-    width: 100%;
-    text-align: center;
-}
-
-.schedule-table {
-    width: 100%;
-    text-align: center;
-    font-size: 20px;
-}
-
-
-.trainer-students {
-    width: 100%;
-    margin: 0 16px;
-}
-
-.trainer-students-heading {
-    margin: 40px 0 0;
-    padding: 10px 0;
-    font-size: 25px;
-    font-weight: 500;
-    width: 100%;
-    text-align: center;
-}
-
-.students-table {
-    width: 100%;
-    text-align: center;
-    font-size: 20px;
-}
-
-.students-table-body td button {
-    padding: 10px 0;
-    margin: 5px 0;
-    width: 70px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--primary-color);
+td {
+    padding: 10px;
     cursor: pointer;
-
+    /* margin: 20px; */
 }
 
+tr {
+    transition: all ease 0.2s;
+}
+
+tr:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
 
 table, th, td{
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-collapse: collapse;
+}
+
+.trainer-delete-student {
+    border: none;
+    font-size: 18px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    opacity: 0.8;
+}
+
+.trainer-delete-student:hover {
+    cursor: pointer;
+    opacity: 1;
 }

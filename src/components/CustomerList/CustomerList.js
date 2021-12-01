@@ -1,61 +1,39 @@
 import React from 'react'
+import clsx from 'clsx'
 
-import './CustomerList.css'
+import styles from './CustomerList.module.css'
+import { AdminHeader, CustomerInfor, CustomerItem } from './../'
 
+// Danh sách các học viên
 
 function CustomerList() {
     return (
-        <div className="customer-list-wrapper">
-            <h1 className="customer-heading">Học viên</h1>
-            <div className="trainer-students">
-                <h2 className="trainer-students-heading">Danh sách học viên</h2>
-                <table className="students-table">
-                    <thead className="students-table-header">
-                        <tr >
-                            <th>Thứ tự</th>
-                            <th>Họ và tên</th>
-                            <th>Tuổi</th>
-                            <th>Giới tính</th>
-                            <th>Số điện thoại</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody className="students-table-body">
-                        <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn Đương</td>
-                            <td>29</td>
-                            <td>Nam</td>
-                            <td>0123455674</td>
-                            <td><button>Xóa</button></td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn Đương</td>
-                            <td>29</td>
-                            <td>Nam</td>
-                            <td>0123455674</td>
-                            <td><button>Xóa</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn Đương</td>
-                            <td>29</td>
-                            <td>Nam</td>
-                            <td>0123455674</td>
-                            <td><button>Xóa</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn Đương</td>
-                            <td>29</td>
-                            <td>Nam</td>
-                            <td>0123455674</td>
-                            <td><button>Xóa</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div className={clsx(styles.wrapper)}>
+            <AdminHeader heading="Danh sách học viên" />
+            <div className={styles.content}>
+                <div className={clsx(styles.contentHeader)}>
+                    <div className={clsx(styles.heading)}>Danh sách học viên</div>
+                    <div className={clsx(styles.option)}>
+                        <div className={clsx(styles.search)}>
+                            <i class="fas fa-search"></i>
+                            Tìm kiếm
+                        </div>
+                        <div className={clsx(styles.add)}>
+                            <i className={clsx(styles.addBtnIcon, "fas", "fa-user-plus")}></i>
+                            Thêm
+                        </div>
+                    </div>
+                </div>
+                <CustomerItem />
+                <CustomerItem />
+                <CustomerItem />
+                <CustomerItem />
+                <CustomerItem />
+                <CustomerItem />
+                <CustomerItem />
+                <CustomerItem />
+                <CustomerItem />
+                {/* <CustomerInfor /> */}
             </div>
         </div>
     )

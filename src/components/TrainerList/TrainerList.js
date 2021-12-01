@@ -1,40 +1,37 @@
-import React from 'react'
-import { Trainer } from './../'
+import React, { useState, useEffect } from 'react'
+import { AdminHeader, TrainerItem, Popup } from './../'
 import './TrainerList.css'
 
 
 function TrainerList() {
     return (
         <div className="trainer-list-wrapper">
-            <div className="trainer-list-header">
-                <h1 className="trainer-heading">Huấn luyện viên</h1>
-                <button className="trainer-add-btn">Thêm</button>
-            </div>
+            <AdminHeader heading="Danh sách huấn luyện viên" />
             <div className="row">
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
-                <Trainer />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
+                <TrainerItem />
             </div>
         </div>
     )

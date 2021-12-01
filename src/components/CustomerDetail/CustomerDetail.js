@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import clsx from 'clsx'
+
+import styles from './CustomerDetail.module.css'
+import { AdminHeader, CustomerInfor } from './../';
+
+// Trang này ở trong trang admin
+// CustomerDetail sẽ gồm Header và CustomerInfor
 
 function CustomerDetail() {
     return (
-        <div>
-            Customer Detail
+        <div className={clsx(styles.customerWrapper)}>
+            <AdminHeader/>
+            <CustomerInfor/>
         </div>
     )
 }

@@ -8,6 +8,7 @@ import authAPI from "./../../api/authAPI";
 
 function Header() {
     let user = useSelector(store => store.auth.user)
+    user = 1;
     let [showOption, setShowOpTion] = useState(false);
 
     const handleShowOption = () => {
@@ -48,7 +49,7 @@ function Header() {
                             {showOption &&
                                 <div className="header-user-option">
                                     <ul className="user-option-list">
-                                        <li onClick={handleShowOption} className='user-option-item'><Link to="/login">Thông tin cá nhân</Link></li>
+                                        <li onClick={handleShowOption} className='user-option-item'><Link to="/myinfor">Thông tin cá nhân</Link></li>
                                         <li onClick={() => {
                                             handleShowOption();
                                             handleLogout();

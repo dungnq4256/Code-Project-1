@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Customer() {
+function CustomerPage() {
     return (
         <div>
             
@@ -8,4 +8,4 @@ function Customer() {
     )
 }
 
-export default Customer
+export default CustomerPage

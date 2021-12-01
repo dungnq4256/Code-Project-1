@@ -1,28 +1,45 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './Category.css'
+import clsx from 'clsx'
+
+import styles from './Category.module.css'
+import avatar from './../../store/imgs/logo.png'
 
 function Category() {
     let [trainerCustomer, setTrainerCustomer] = useState(false);
     return (
-        <div className="admin-category">
-            <ul className="manage-list">
-                <li className="manage-item" onClick={() => setTrainerCustomer(!trainerCustomer)}>
-                    {!trainerCustomer && <i class="fas fa-caret-right left-icon"></i>}
-                    {trainerCustomer && <i class="fas fa-caret-down down-icon"></i>}
-                    Quản lý tài khoản
+        <div className={clsx(styles.wrapper)}>
+            <div className={clsx(styles.header)}>
+                <img src={avatar} alt="" className={clsx(styles.headerImg)} />
+                <div className={clsx(styles.headerHeading)}>
+                    <div className={clsx(styles.primaryHeading)}>
+                        Admin
+                    </div>
+                    <div className={clsx(styles.subHeading)}>
+                        Admin
+                    </div>
+                </div>
+            </div>
+            <ul className={clsx(styles.categoryList)}>
+                <li className={clsx(styles.categoryItem)}>
+                    <i className={clsx(styles.categoryIcon, "fas fa-home")}></i>
+                    <Link className={clsx(styles.itemLink)} to="/admin">Home</Link>
                 </li>
-                {trainerCustomer &&
-                    <li className="manage item">
-                        <div className="trainer-customer">
-                            <Link to="trainers"><h2 className="manage-account-trainer">Huấn luyện viên</h2></Link>
-                            <Link to="customers"><h2 className="manage-account-customer">Học viên</h2></Link>
-                        </div>
-                    </li>
-                }
-                <li className="manage-item">Sự kiện</li>
-                <li className="manage-item">Tạo blog</li>
-                <li className="manage-item">Sản phẩm</li>
+
+                <li className={clsx(styles.categoryItem)}>
+                    <i className={clsx(styles.categoryIcon, "fas fa-user-friends")}></i>
+                    <Link className={clsx(styles.itemLink)} to="trainers">Huấn luyện viên</Link>
+                </li>
+
+                <li className={clsx(styles.categoryItem)}>
+                    <i className={clsx(styles.categoryIcon, "fas fa-users")}></i>
+                    <Link className={clsx(styles.itemLink)} to="customers">Học viên</Link>
+                </li>
+                
+                <li className={clsx(styles.categoryItem)}>
+                    <i className={clsx(styles.categoryIcon, "fas fa-calendar-week")}></i>
+                    <Link className={clsx(styles.itemLink)} to="events">Sự kiện</Link>
+                </li>
             </ul>
         </div>
     )

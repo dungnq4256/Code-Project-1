@@ -3,6 +3,7 @@ import Homepage from './pages/Homepage'
 import Loginpage from './pages/Loginpage';
 import Notfoundpage from './pages/Notfoundpage';
 import AdminPage from './pages/AdminPage';
+import TrainerInforPage from './pages/TrainerPage';
 
 
 const routes = [
@@ -17,6 +18,10 @@ const routes = [
     {
         path: '/admin/*',
         element: <AdminPage/>
+    },
+    {
+        path: '/myinfor',
+        element: <TrainerInforPage/>
     },
     {
         path: '*',

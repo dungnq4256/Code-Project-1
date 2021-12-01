@@ -2,48 +2,30 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import logo from './../../store/imgs/logo.png'
 import { Routes, Route } from 'react-router-dom'
-import { TrainerList, CustomerList, Category, AdminWelcome, TrainerDetail, CustomerDetail } from './../'
-import Notfoundpage from '../../pages/Notfoundpage'
-import './Admin.css'
+import { TrainerList, CustomerList, Category, AdminWelcome, TrainerDetail, CustomerDetail, Schedule } from './../'
+import { AddTrainer, AddCustomer } from './../'
+import clsx from 'clsx'
+
+import styles from './Admin.module.css'
+
+// Trang admin
 
 function Admin() {
     return (
-        <div className="admin-wrapper">
-            <div className="admin-header-wrapper">
-                <div className="grid wide">
-                    <div className="admin-header">
-                        <div className="admin-header-logo">
-                            <Link to='/'><img src={logo} alt="" className="logo-img" /></Link>
-                            <Link to='/' className="logo-name">RUBYGYM</Link>
-                        </div>
-                        <div className="admin-header-heading">
-                            Quản lý
-                        </div>
-                        <div className="admin-header-logout">
-                            Đăng xuất
-                        </div>
-                    </div>
-                </div>
+        <div className={clsx(styles.wrapper)}>
+            <div className={clsx(styles.sidebar)}>
+                <Category />
             </div>
-            <main className="admin-main">
-                <div className="grid wide">
-                    <div className="row">
-                        <div className="col l-2 m-0">
-                            <Category/>
-                        </div>
-                        <div className="col l-10 m-12">
-                            <div className="admin-content">
-                                <Routes>
-                                    <Route path="trainers" element={<TrainerList />} />
-                                    <Route path="trainers/detail/:id" element={<TrainerDetail />} />
-                                    <Route path="customers" element={<CustomerList />} />
-                                    <Route path="customers/detail" element={<CustomerDetail />} />
-                                    <Route path="" element={<AdminWelcome />} />
-                                </Routes>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <main className={clsx(styles.content)}>
+                <Routes>
+                    <Route path="trainers" element={<TrainerList />} />
+                    <Route path="trainers/add" element={<AddTrainer />} />
+                    <Route path="trainers/detail/:id" element={<TrainerDetail />} />
+                    <Route path="customers" element={<CustomerList />} />
+                    <Route path="customers/add" element={<AddCustomer />} />
+                    <Route path="customers/detail:id" element={<CustomerDetail />} />
+                    <Route path="" element={<AdminWelcome />} />
+                </Routes>
             </main >
         </div >
     )

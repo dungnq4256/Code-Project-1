@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './Trainer.css'
+import './TrainerItem.css'
 
-function Trainer() {
+function TrainerItem() {
     const id = 1;
     return (
         <div className="col l-3 m-4 c-6">
@@ -18,4 +18,4 @@ function Trainer() {
     )
 }
 
-export default Trainer
+export default TrainerItem

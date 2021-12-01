@@ -1,5 +1,7 @@
 :root {
   --primary-color: #C20518;
+  --text-color: #333;
+  --sidebar-height: 240px;
 }
 
 * {
