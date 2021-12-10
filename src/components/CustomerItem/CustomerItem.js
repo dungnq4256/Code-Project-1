@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useParams } from 'react'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 
@@ -8,10 +8,11 @@ import styles from './CustomerItem.module.css'
 
 //Từng học viên trong danh sách các học viên
 
-function Customer() {
+function CustomerItem() {
+    const id = 1
     return (
         <div to='/' className={clsx(styles.wrapper)}>
-            <Link to='/' className={clsx(styles.content)}>
+            <Link to={`detail/${id}`} className={clsx(styles.content)}>
                 <div className={clsx(styles.avatarField)}>
                     <div
                         style={{
@@ -27,6 +28,7 @@ function Customer() {
 
                 <div className={clsx(styles.inforField)}>
                     <div className={clsx(styles.inforContent, styles.status)}>Hoạt động</div>
+                    {/* <div className={clsx(styles.inforContent, styles.status)}>Hết hạn</div> */}
                 </div>
 
                 <div className={clsx(styles.inforField)}>
@@ -35,7 +37,7 @@ function Customer() {
                 </div>
 
                 <div className={clsx(styles.inforField)}>
-                    <i 
+                    <i
                         class={clsx(styles.inforIcon, styles.birthday, "fas fa-birthday-cake")}
                         style={{
                             color: 'rgb(241, 122, 142)'
@@ -45,7 +47,7 @@ function Customer() {
                 </div>
 
                 <div className={clsx(styles.inforField)}>
-                    <i 
+                    <i
                         class={clsx(styles.inforIcon, styles.phone, "fas fa-mobile")}
                         style={{
                             color: 'rgb(184, 184, 58)'
@@ -55,7 +57,7 @@ function Customer() {
                 </div>
 
                 <div className={clsx(styles.inforField)}>
-                    <i 
+                    <i
                         class={clsx(styles.inforIcon, styles.phone, "fas fa-chalkboard-teacher")}
                         style={{
                             color: 'rgb(48, 48, 240)'
@@ -85,4 +87,4 @@ function Customer() {
     )
 }
 
-export default Customer
+export default CustomerItem

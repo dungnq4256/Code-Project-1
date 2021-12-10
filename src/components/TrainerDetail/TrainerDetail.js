@@ -1,31 +1,42 @@
 import React from 'react'
-import './TrainerDetail.css'
+import clsx from 'clsx'
+import { AdminHeader, CustomerItem, Schedule } from './../'
 import { useParams } from 'react-router-dom'
-import { AdminHeader, Schedule, TrainerDetailInfor } from './../'
-import TrainerDetailSchedule from '../TrainerDetailSchedule/TrainerDetailSchedule'
-import TrainerDetailStudents from '../TrainerDetailStudents/TrainerDetailStudents'
 
-function TrainerDetail() {
+import styles from './TrainerDetail.module.css'
+import TrainerInfor from '../TrainerInfor/TrainerInfor'
+
+function TrainerDetail({ admin }) {
     const id = useParams();
-    
+
     return (
-        <div className="trainer-detail-wrapper">
-            <AdminHeader heading="Thông tin huấn luyện viên" />
-            <div className="trainer-detail-content">
-                <section className="trainer-content">
-                    <h2 className="trainer-content-heading">Thông tin cá nhân</h2>
-                    <TrainerDetailInfor />
+        <div className={clsx(styles.wrapper)}>
+            {admin && <AdminHeader heading="Thông tin huấn luyện viên" />}
+            <div className={clsx(styles.content)}>
+                <section className={clsx(styles.contentField)}>
+                    <h2 className={clsx(styles.heading)}>Thông tin cá nhân</h2>
+                    <TrainerInfor />
                 </section>
 
-                <section className="trainer-content">
-                    <h2 className="trainer-content-heading">Lịch huấn luyện</h2>
-                    <TrainerDetailSchedule/>
-                    <Schedule/>
+                <section className={clsx(styles.contentField)}>
+                    <h2 className={clsx(styles.heading)}>Lịch huấn luyện</h2>
+                    <Schedule />
                 </section>
 
-                <section className="trainer-content">
-                    <h2 className="trainer-content-heading">Danh sách học viên</h2>
-                    <TrainerDetailStudents/>
+                <section className={clsx(styles.contentField)}>
+                    <h2 className={clsx(styles.heading)}>Danh sách học viên</h2>
+                    {/* <div className="grid">
+                        <div className="row">
+                            <div className="col l-10 l-o-1"> */}
+                    <CustomerItem />
+                    <CustomerItem />
+                    <CustomerItem />
+                    <CustomerItem />
+                    <CustomerItem />
+                    <CustomerItem />
+                    {/* </div>
+                        </div>
+                    </div> */}
                 </section>
             </div>
         </div>

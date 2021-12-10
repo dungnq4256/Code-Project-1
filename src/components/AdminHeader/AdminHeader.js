@@ -10,7 +10,7 @@ function AdminHeader({ heading }) {
     return (
         <div className={clsx(styles.wrapper)}>
             <h2 className={clsx(styles.heading)}>{heading}</h2>
-            {
+            {/* {
                 heading && heading.includes("huấn luyện viên") ?
                     <Link to='/admin/trainers/add' className={clsx(styles.addBtn)}>
                         <i className={clsx(styles.addBtnIcon, "fas", "fa-user-plus")}></i>
@@ -20,7 +20,7 @@ function AdminHeader({ heading }) {
                         <i className={clsx(styles.addBtnIcon, "fas", "fa-user-plus")}></i>
                         Thêm
                     </Link>
-            }
+            } */}
         </div>
     )
 }

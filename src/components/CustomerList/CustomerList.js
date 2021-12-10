@@ -1,8 +1,9 @@
 import React from 'react'
 import clsx from 'clsx'
+import { Link } from 'react-router-dom'
 
 import styles from './CustomerList.module.css'
-import { AdminHeader, CustomerInfor, CustomerItem } from './../'
+import { AdminHeader, CustomerItem } from './../'
 
 // Danh sách các học viên
 
@@ -14,14 +15,14 @@ function CustomerList() {
                 <div className={clsx(styles.contentHeader)}>
                     <div className={clsx(styles.heading)}>Danh sách học viên</div>
                     <div className={clsx(styles.option)}>
-                        <div className={clsx(styles.search)}>
-                            <i class="fas fa-search"></i>
+                        <Link to='/' className={clsx(styles.optionBtn)}>
+                            <i class={clsx(styles.optionIcon, "fas fa-search")}></i>
                             Tìm kiếm
-                        </div>
-                        <div className={clsx(styles.add)}>
-                            <i className={clsx(styles.addBtnIcon, "fas", "fa-user-plus")}></i>
+                        </Link>
+                        <Link to='/' className={clsx(styles.optionBtn)}>
+                            <i className={clsx(styles.optionIcon, "fas", "fa-user-plus")}></i>
                             Thêm
-                        </div>
+                        </Link>
                     </div>
                 </div>
                 <CustomerItem />

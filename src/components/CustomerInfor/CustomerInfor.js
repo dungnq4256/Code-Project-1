@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import clsx from 'clsx'
-import avatar from './../../store/imgs/trainer1.jpg'
 import { Popup } from './../'
-// import userProfileAPI from './../../api/userProfileAPI'
+import userProfileAPI from '../../api/userProfileAPI'
+import avatar from './../../store/imgs/avatar.jpg'
 
 import styles from './CustomerInfor.module.css'
 
@@ -11,43 +11,38 @@ import styles from './CustomerInfor.module.css'
 
 function CustomerInfor() {
     let [nameUpdating, setNameUpdating] = useState(false);
-    let [birthdayUpdating, setBirthdayUpdating] = useState(false);
     let [phoneUpdating, setPhoneUpdating] = useState(false);
+    let [birthdayUpdating, setBirthdayUpdating] = useState(false);
     let [addressUpdating, setAddressUpdating] = useState(false);
+    let [genderUpdating, setGenderUpdating] = useState(false);
     let [registerUpdating, setRegisterUpdating] = useState(false);
     let [outdateUpdating, setOutdateUpdating] = useState(false);
-    // let [useNameUpdating, setUseNameUpdating] = useState(false);
-    // let [heightUpdating, setHeightUpdating] = useState(false);
-    // let [weightUpdating, setWeightUpdating] = useState(false);
-
     let [showPopup, setShowPopup] = useState(false);
 
     let nameRef = useRef(null);
-    let birthdayRef = useRef(null);
     let phoneRef = useRef(null);
+    let birthdayRef = useRef(null);
+    let genderRef = useRef(null);
     let addressRef = useRef(null);
     let registerRef = useRef(null);
     let outdateRef = useRef(null);
-    // let useNameRef = useRef(null);
-    // let heightRef = useRef(null);
-    // let weightRef = useRef(null);
-    
 
     let [userProfile, setUserProfile] = useState({
         name: '',
         phone: '',
         birthday: '',
-        gender: '',
+        gender: 'Nam',
         address: '',
-        register: '',
-        outdate: ''
+        create_at: '',
+        expire_at: '',
+        avatar_url: '',
     });
 
     // Để show Popup sau khi cập nhật thành công
     useEffect(() => {
         if (showPopup) {
             var id = setTimeout(() => {
-                setShowPopup(prev => !prev)
+                setShowPopup(prev => !prev);
             }, 1000)
         }
         return () => {
@@ -57,31 +52,108 @@ function CustomerInfor() {
 
     // Lấy profile về
     useEffect(() => {
-        
+        (async () => {
+            const response = await userProfileAPI.getProfile();
+            if (response && response.status && response.status.data) {
+                userProfile = { ...response.data.data };
+                setUserProfile(userProfile);
+            }
+        })()
     }, [])
 
-    const handleUpdate = () => {
-        setShowPopup(prev => !prev)
+    // Upload Avatar
+
+    const handleUploadAvatar = async (e) => {
+        // Upload lên Cloudinary
+
+        const files = e.target.files;
+        const data = new FormData();
+        data.append('file', files[0]);
+        data.append('upload_preset', 'rubygymimages');
+
+        const response = await fetch('https://api.cloudinary.com/v1_1/dzgdwey0f/image/upload', {
+            method: 'POST',
+            body: data
+        })
+
+        const file = await response.json();
+        userProfile = {
+            ...userProfile,
+            avatar_url: file.secure_url
+        }
+
+        // const response = await userProfileAPI.updateAvatar(data)
+
+        setUserProfile(userProfile)
+        console.log(file);
         console.log(userProfile)
+
+        //================================================================
+
+        // Upload lên server
+        // const file = e.target.files[0];
+        // const formData = new FormData();
+        // formData.append('File', file);
+
+        // const response = await userProfileAPI.updateAvatar(formData);
+
+        // if(response && response.status && response.data) {
+        //     userProfile = {
+        //         ...userProfile,
+        //         avatar_url: response.data
+        //     }
+        //     setUserProfile(userProfile);
+        // }
+        // if(response && !response.status) {
+        //     alert(response.message)
+        // }
     }
+
+
+    //Update Profile
+    const handleUpdate = async () => {
+        console.log(userProfile);
+        setShowPopup(prev => !prev)
+        // const response = await userProfileAPI.updateProfile(userProfile);
+        // if(response && response.status) setShowPopup(prev => !prev);
+        // if(response && !response.status && response.message) {
+        //     alert(response.message)
+        // }
+    }
+
 
     return (
         <div className="grid">
 
             {/* Thông tin cá nhân */}
             <div className={clsx(styles.inforField)}>
-                <h1 className={clsx(styles.inforHeading)}>Thông tin cá nhân</h1>
                 <div className="row">
 
                     {/* Avatar */}
                     <div className="col l-5 m-0 c-0">
-                        <div className={clsx(styles.avatar)}
+                        <div 
+                            className={clsx(styles.avatar)}
                             style={{
-                                backgroundImage: `url(${avatar})`,
+                                backgroundImage: userProfile.avatar_url ?
+                                    `url(${userProfile.avatar_url})` :
+                                    `url(${avatar})`,
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat'
-                            }}>
+                            }}
+                        >
+                            <label 
+                                htmlFor="avatarChoose"
+                                className={clsx(styles.chooseAvatar)}
+                            >
+                                <i className={clsx(styles.chooseAvatarIcon, "fas fa-camera")}></i>
+                            </label>
+                            <input 
+                                type="file" 
+                                id="avatarChoose"
+                                hidden
+                                onChange={ handleUploadAvatar }
+                            />
                         </div>
                     </div>
 
@@ -142,67 +214,6 @@ function CustomerInfor() {
                                         className={clsx(styles.inforBtn)}
                                         onClick={() => {
                                             setNameUpdating(prev => !prev);
-                                        }}
-                                    >
-                                        <i class="fas fa-window-close"></i>
-                                        Hủy
-                                    </label>
-                                }
-                            </div>
-
-                            {/* Ngày sinh */}
-                            <div className={clsx(styles.inforWrapper)}>
-                                <div className={clsx(styles.inforContent)}>
-                                    <h3 className={clsx(styles.inforLabel)}>Ngày sinh</h3>
-                                    <input
-                                        readOnly={!birthdayUpdating}
-                                        ref={birthdayRef}
-                                        type="date"
-                                        className={clsx(styles.inforText)}
-                                        value={userProfile.birthday}
-                                        onChange={(e) => {
-                                            setUserProfile(prev => ({
-                                                ...userProfile,
-                                                birthday: e.target.value
-                                            }))
-                                        }}
-                                        id='trainer-birthday' />
-                                </div>
-                                {
-                                    !birthdayUpdating &&
-                                    <label
-                                        htmlFor='trainer-birthday'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            birthdayRef.current.focus();
-                                            setBirthdayUpdating(prev => !prev);
-                                        }}
-                                    >
-                                        <i class="fas fa-pen"></i>
-                                        Chỉnh sửa
-                                    </label>
-                                }
-                                {
-                                    birthdayUpdating &&
-                                    <label
-                                        htmlFor='trainer-birthday'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            setBirthdayUpdating(prev => !prev);
-                                            handleUpdate();
-                                        }}
-                                    >
-                                        <i class="fas fa-save"></i>
-                                        Lưu lại
-                                    </label>
-                                }
-                                {
-                                    birthdayUpdating &&
-                                    <label
-                                        htmlFor='trainer-birthday'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            setBirthdayUpdating(prev => !prev);
                                         }}
                                     >
                                         <i class="fas fa-window-close"></i>
@@ -272,30 +283,32 @@ function CustomerInfor() {
                                 }
                             </div>
 
-                            {/* Tài khoản */}
-                            {/* <div className={clsx(styles.inforWrapper)}>
+                            {/* Ngày sinh */}
+                            <div className={clsx(styles.inforWrapper)}>
                                 <div className={clsx(styles.inforContent)}>
-                                    <h3 className={clsx(styles.inforLabel)}>Tài khoản</h3>
+                                    <h3 className={clsx(styles.inforLabel)}>Ngày sinh</h3>
                                     <input
-                                        readOnly={!useNameUpdating}
-                                        ref={useNameRef}
-                                        type="text"
+                                        readOnly={!birthdayUpdating}
+                                        ref={birthdayRef}
+                                        type="date"
                                         className={clsx(styles.inforText)}
-                                        value={userProfile.useName}
-                                        onChange={(e) => ({
-                                            ...userProfile,
-                                            useName: e.target.value
-                                        })}
-                                        id='trainer-account' />
+                                        value={userProfile.birthday}
+                                        onChange={(e) => {
+                                            setUserProfile(prev => ({
+                                                ...userProfile,
+                                                birthday: e.target.value
+                                            }))
+                                        }}
+                                        id='trainer-birthday' />
                                 </div>
                                 {
-                                    !useNameUpdating &&
+                                    !birthdayUpdating &&
                                     <label
-                                        htmlFor='trainer-account'
+                                        htmlFor='trainer-birthday'
                                         className={clsx(styles.inforBtn)}
                                         onClick={() => {
-                                            useNameRef.current.focus();
-                                            setUseNameUpdating(prev => !prev);
+                                            birthdayRef.current.focus();
+                                            setBirthdayUpdating(prev => !prev);
                                         }}
                                     >
                                         <i class="fas fa-pen"></i>
@@ -303,12 +316,12 @@ function CustomerInfor() {
                                     </label>
                                 }
                                 {
-                                    useNameUpdating &&
+                                    birthdayUpdating &&
                                     <label
-                                        htmlFor='trainer-account'
+                                        htmlFor='trainer-birthday'
                                         className={clsx(styles.inforBtn)}
                                         onClick={() => {
-                                            setUseNameUpdating(prev => !prev);
+                                            setBirthdayUpdating(prev => !prev);
                                             handleUpdate();
                                         }}
                                     >
@@ -317,19 +330,82 @@ function CustomerInfor() {
                                     </label>
                                 }
                                 {
-                                    useNameUpdating &&
+                                    birthdayUpdating &&
                                     <label
-                                        htmlFor='trainer-account'
+                                        htmlFor='trainer-birthday'
                                         className={clsx(styles.inforBtn)}
                                         onClick={() => {
-                                            setUseNameUpdating(prev => !prev)
+                                            setBirthdayUpdating(prev => !prev);
                                         }}
                                     >
                                         <i class="fas fa-window-close"></i>
                                         Hủy
                                     </label>
                                 }
-                            </div> */}
+                            </div>
+
+                            {/* Giới tính */}
+                            <div className={clsx(styles.inforWrapper)}>
+                                <div className={clsx(styles.inforContent)}>
+                                    <h3 className={clsx(styles.inforLabel)}>Giới tính</h3>
+                                    <select
+                                        disabled={!genderUpdating}
+                                        ref={genderRef}
+                                        className={clsx(styles.inforText)}
+                                        value={userProfile.gender}
+                                        onChange={(e) => {
+                                            setUserProfile(prev => ({
+                                                ...userProfile,
+                                                gender: e.target.value
+                                            }))
+                                        }}
+                                    >
+                                        <option>Nam</option>
+                                        <option>Nữ</option>
+                                    </select>
+                                </div>
+                                {
+                                    !genderUpdating &&
+                                    <label
+                                        htmlFor='trainer-birthday'
+                                        className={clsx(styles.inforBtn)}
+                                        onClick={() => {
+                                            genderRef.current.focus();
+                                            setGenderUpdating(prev => !prev);
+                                        }}
+                                    >
+                                        <i class="fas fa-pen"></i>
+                                        Chỉnh sửa
+                                    </label>
+                                }
+                                {
+                                    genderUpdating &&
+                                    <label
+                                        htmlFor='trainer-birthday'
+                                        className={clsx(styles.inforBtn)}
+                                        onClick={() => {
+                                            setGenderUpdating(prev => !prev);
+                                            handleUpdate();
+                                        }}
+                                    >
+                                        <i class="fas fa-save"></i>
+                                        Lưu lại
+                                    </label>
+                                }
+                                {
+                                    genderUpdating &&
+                                    <label
+                                        htmlFor='trainer-birthday'
+                                        className={clsx(styles.inforBtn)}
+                                        onClick={() => {
+                                            setGenderUpdating(prev => !prev);
+                                        }}
+                                    >
+                                        <i class="fas fa-window-close"></i>
+                                        Hủy
+                                    </label>
+                                }
+                            </div>
 
                             {/* Địa chỉ */}
                             <div className={clsx(styles.inforWrapper)}>
@@ -391,125 +467,6 @@ function CustomerInfor() {
                                     </label>
                                 }
                             </div>
-
-
-                            {/* Chiều cao */}
-                            {/* <div className={clsx(styles.inforWrapper)}>
-                                <div className={clsx(styles.inforContent)}>
-                                    <h3 className={clsx(styles.inforLabel)}>Chiều cao</h3>
-                                    <input
-                                        readOnly={!heightUpdating}
-                                        ref={heightRef}
-                                        type="text"
-                                        className={clsx(styles.inforText)}
-                                        value={userProfile.height}
-                                        onChange={(e) => ({
-                                            ...userProfile,
-                                            height: e.target.value
-                                        })}
-                                        id='trainer-height' />
-                                </div>
-                                {
-                                    !heightUpdating &&
-                                    <label
-                                        htmlFor='trainer-height'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            heightRef.current.focus();
-                                            setHeightUpdating(prev => !prev);
-                                        }}
-                                    >
-                                        <i class="fas fa-pen"></i>
-                                        Chỉnh sửa
-                                    </label>
-                                }
-                                {
-                                    heightUpdating &&
-                                    <label
-                                        htmlFor='trainer-height'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            setHeightUpdating(prev => !prev);
-                                            handleUpdate();
-                                        }}
-                                    >
-                                        <i class="fas fa-save"></i>
-                                        Lưu lại
-                                    </label>
-                                }
-                                {
-                                    heightUpdating &&
-                                    <label
-                                        htmlFor='trainer-height'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            setHeightUpdating(prev => !prev)
-                                        }}
-                                    >
-                                        <i class="fas fa-window-close"></i>
-                                        Hủy
-                                    </label>
-                                }
-                            </div> */}
-
-                            {/* Cân nặng */}
-                            {/* <div className={clsx(styles.inforWrapper)}>
-                                <div className={clsx(styles.inforContent)}>
-                                    <h3 className={clsx(styles.inforLabel)}>Cân nặng</h3>
-                                    <input
-                                        readOnly={!weightUpdating}
-                                        ref={weightRef}
-                                        type="text"
-                                        className={clsx(styles.inforText)}
-                                        value={userProfile.birthday}
-                                        onChange={(e) => ({
-                                            ...userProfile,
-                                            weight: e.target.value
-                                        })}
-                                        id='trainer-weight' />
-                                </div>
-                                {
-                                    !weightUpdating &&
-                                    <label
-                                        htmlFor='trainer-weight'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            weightRef.current.focus();
-                                            setWeightUpdating(prev => !prev);
-                                        }}
-                                    >
-                                        <i class="fas fa-pen"></i>
-                                        Chỉnh sửa
-                                    </label>
-                                }
-                                {
-                                    weightUpdating &&
-                                    <label
-                                        htmlFor='trainer-weight'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            setWeightUpdating(prev => !prev);
-                                            handleUpdate();
-                                        }}
-                                    >
-                                        <i class="fas fa-save"></i>
-                                        Lưu lại
-                                    </label>
-                                }
-                                {
-                                    weightUpdating &&
-                                    <label
-                                        htmlFor='trainer-birthday'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            setWeightUpdating(prev => !prev)
-                                        }}
-                                    >
-                                        <i class="fas fa-window-close"></i>
-                                        Hủy
-                                    </label>
-                                }
-                            </div> */}
 
                             {/* Ngày đăng ký */}
                             <div className={clsx(styles.inforWrapper)}>
@@ -632,31 +589,10 @@ function CustomerInfor() {
                                     </label>
                                 }
                             </div>
-
-                            {/* Huấn luyện viên */}
-                            {/* <div className={clsx(styles.inforWrapper)}>
-                                <div className={clsx(styles.inforContent)}>
-                                    <h3 className={clsx(styles.inforLabel)}>Huấn luyện viên</h3>
-                                    <input
-                                        style={{ pointerEvents: 'none' }}
-                                        type="text"
-                                        className={clsx(styles.inforText)}
-                                        value="60kg"
-                                        id='trainer-trainer' />
-                                </div>
-                            </div> */}
-
-                            {/* <button className={clsx(styles.inforSave)}>Lưu lại</button> */}
                         </div>
                     </div>
                 </div>
             </div>
-
-            {/* Lịch tập luyện */}
-            <div className={clsx(styles.inforField)}>
-                <h1 className={clsx(styles.inforHeading)}>Thông tin tập luyện</h1>
-            </div>
-
             <Popup trigger={showPopup} message="Cập nhật thành công" />
         </div>
     )

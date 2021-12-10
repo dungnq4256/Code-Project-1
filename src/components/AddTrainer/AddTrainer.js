@@ -35,7 +35,7 @@ function AddTrainer() {
                 <div className="row">
                     <div className="col l-6">
                         <div className={clsx(styles.content)}>
-                            
+
                             <div className={clsx(styles.contentField)}>
                                 {/* <h2 className={clsx(styles.contentLabel)}>Họ và tên</h2> */}
                                 <i class="fas fa-user-circle"></i>
@@ -152,7 +152,9 @@ function AddTrainer() {
                         </div>
 
                     </div>
+
                 </div>
+
             </div>
 
             <Popup trigger={showPopup} message="Thêm thành công" />

@@ -12,17 +12,16 @@ import CustomerItem from './CustomerItem/CustomerItem';
 import AdminWelcome from './AdminWelcome/AdminWelcome';
 import CustomerDetail from './CustomerDetail/CustomerDetail';
 import TrainerDetail from './TrainerDetail/TrainerDetail';
-import TrainerDetailInfor from './TrainerDetailInfor/TrainerDetailInfor';
 import AdminHeader from './AdminHeader/AdminHeader';
 import Schedule from './Schedule/Schedule';
 import AddTrainer from './AddTrainer/AddTrainer';
 import AddCustomer from './AddCustomer/AddCustomer';
 import Popup from './Popup/Popup';
-import TrainerInfor from './TrainerInfor/TrainerInfor';
 import CustomerInfor from './CustomerInfor/CustomerInfor';
+import TrainerInfor from './TrainerInfor/TrainerInfor';
 
 
 export { Header, Footer, Login, Banner, ScrollToTop }
 export { Admin, TrainerList, CustomerList, Category, TrainerItem, CustomerItem, AdminWelcome };
-export { CustomerDetail, TrainerDetail, AdminHeader, TrainerDetailInfor, Schedule };
-export { AddTrainer, AddCustomer, Popup, TrainerInfor, CustomerInfor };
+export { CustomerDetail, TrainerDetail, AdminHeader, Schedule };
+export { AddTrainer, AddCustomer, Popup, CustomerInfor, TrainerInfor };

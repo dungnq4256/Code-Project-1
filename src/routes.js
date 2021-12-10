@@ -3,7 +3,8 @@ import Homepage from './pages/Homepage'
 import Loginpage from './pages/Loginpage';
 import Notfoundpage from './pages/Notfoundpage';
 import AdminPage from './pages/AdminPage';
-import TrainerInforPage from './pages/TrainerPage';
+import TrainerPage from './pages/TrainerPage';
+import CustomerPage from './pages/CustomerPage';
 
 
 const routes = [
@@ -20,8 +21,12 @@ const routes = [
         element: <AdminPage/>
     },
     {
-        path: '/myinfor',
-        element: <TrainerInforPage/>
+        path: '/trainer',
+        element: <TrainerPage/>
+    },
+    {
+        path: '/customer',
+        element: <CustomerPage/>
     },
     {
         path: '*',

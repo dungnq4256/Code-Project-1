@@ -1,6 +1,6 @@
 import axiosClient from "./axiosClient"
 
-const userAPI = {
+const userProfileAPI = {
     getProfile: async () => {
         try {
             const url = '/member/profile';
@@ -12,4 +12,4 @@ const userAPI = {
     }
 }
 
-export default userAPI;
+export default userProfileAPI;
