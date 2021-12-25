@@ -4,14 +4,11 @@ import { store } from './../index'
 
 
 const authAPI = {
-    login: async (params) => {
+    login: async () => {
         try {
-            const url = '/auth/login';
-            const response = await axiosClient.post(url, { params });
-            localStorage.setItem('token', response.data.access_token);
-            store.dispatch(Actions.saveUserToRedux(localStorage.getItem('token')));
+            const url = 'https://61bca039d8542f00178248c3.mockapi.io/api/users';
+            const response = await axiosClient.get(url);
             console.log(response)
-            console.log("dang nhap oke");
             return response;
         } catch (err) {
             console.log("khong oke");

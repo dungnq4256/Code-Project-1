@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import clsx from 'clsx'
 import { Popup } from './../'
-import userProfileAPI from '../../api/userProfileAPI'
 import avatar from './../../store/imgs/avatar.jpg'
 
 import styles from './TrainerInfor.module.css'
+import axiosClient from '../../api/axiosClient'
 
 // Trang này có thể hiển thị với cả học viên, huấn luyện viên và admin
 // Thông tin chi tiết của mỗi học viên
 
-function TrainerInfor() {
+function TrainerInfor({ id }) {
     let [nameUpdating, setNameUpdating] = useState(false);
     let [phoneUpdating, setPhoneUpdating] = useState(false);
     let [birthdayUpdating, setBirthdayUpdating] = useState(false);
@@ -25,15 +25,8 @@ function TrainerInfor() {
     let addressRef = useRef(null);
     let registerRef = useRef(null);
 
-    let [userProfile, setUserProfile] = useState({
-        name: '',
-        phone: '',
-        birthday: '',
-        gender: 'Nam',
-        address: '',
-        create_at: '',
-        avatar_url: '',
-    });
+
+    let [userProfile, setUserProfile] = useState({});
 
     // Để show Popup sau khi cập nhật thành công
     useEffect(() => {
@@ -50,11 +43,22 @@ function TrainerInfor() {
     // Lấy profile về
     useEffect(() => {
         (async () => {
-            const response = await userProfileAPI.getProfile();
-            if (response && response.status && response.data.data) {
-                userProfile = { ...response.data.data };
-                setUserProfile(userProfile);
-            }
+            const url = `https://61bca039d8542f00178248c3.mockapi.io/api/trainers/${id}`;
+            const response = await axiosClient.get(url);
+            console.log(response);
+            setUserProfile(prev => ({
+                name: response.name,
+                phone: response.phone,
+                birthday: response.birthday,
+                gender: response.gender,
+                address: response.address,
+                create_at: response.register,
+                avatar_url: response.avatarURL,
+            }))
+
+            userProfile = {...response};
+            setUserProfile(userProfile);
+
         })()
     }, [])
 
@@ -76,26 +80,25 @@ function TrainerInfor() {
         const file = await response.json();
         userProfile = {
             ...userProfile,
-            avatar_url: file.secure_url
+            avatarURL: file.secure_url
         }
-
-        // const response = await userProfileAPI.updateAvatar(data)
-
         setUserProfile(userProfile)
+        console.log(userProfile)
+        const url = `https://61bca039d8542f00178248c3.mockapi.io/api/trainers/${id}`
+        let response1 = await axiosClient.put(url, { ...userProfile })
+        setShowPopup(prev => !prev)
         console.log(file);
         console.log(userProfile)
+
     }
 
 
     //Update Profile
     const handleUpdate = async () => {
         console.log(userProfile);
+        const url = `https://61bca039d8542f00178248c3.mockapi.io/api/trainers/${id}`
+        const response = await axiosClient.put(url, { ...userProfile })
         setShowPopup(prev => !prev)
-        // const response = await userProfileAPI.updateProfile(userProfile);
-        // if(response && response.status) setShowPopup(prev => !prev);
-        // if(response && !response.status && response.message) {
-        //     alert(response.message)
-        // }
     }
 
 
@@ -108,28 +111,28 @@ function TrainerInfor() {
 
                     {/* Avatar */}
                     <div className="col l-5 m-0 c-0">
-                        <div 
+                        <div
                             className={clsx(styles.avatar)}
                             style={{
-                                backgroundImage: userProfile.avatar_url ?
-                                    `url(${userProfile.avatar_url})` :
+                                backgroundImage: userProfile.avatarURL ?
+                                    `url(${userProfile.avatarURL})` :
                                     `url(${avatar})`,
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat'
                             }}
                         >
-                            <label 
+                            <label
                                 htmlFor="avatarChoose"
                                 className={clsx(styles.chooseAvatar)}
                             >
                                 <i className={clsx(styles.chooseAvatarIcon, "fas fa-camera")}></i>
                             </label>
-                            <input 
-                                type="file" 
+                            <input
+                                type="file"
                                 id="avatarChoose"
                                 hidden
-                                onChange={ handleUploadAvatar }
+                                onChange={handleUploadAvatar}
                             />
                         </div>
                     </div>
@@ -454,7 +457,7 @@ function TrainerInfor() {
                                         ref={registerRef}
                                         type="date"
                                         className={clsx(styles.inforText)}
-                                        value={userProfile.register}
+                                        value='2021-01-12'
                                         onChange={(e) => {
                                             setUserProfile(prev => ({
                                                 ...userProfile,
@@ -505,67 +508,6 @@ function TrainerInfor() {
                                     </label>
                                 }
                             </div>
-
-                            {/* Ngày hết hạn */}
-                            {/* <div className={clsx(styles.inforWrapper)}>
-                                <div className={clsx(styles.inforContent)}>
-                                    <h3 className={clsx(styles.inforLabel)}>Ngày hết hạn</h3>
-                                    <input
-                                        readOnly={!outdateUpdating}
-                                        ref={outdateRef}
-                                        type="date"
-                                        className={clsx(styles.inforText)}
-                                        value={userProfile.outdate}
-                                        onChange={(e) => {
-                                            setUserProfile(prev => ({
-                                                ...userProfile,
-                                                outdate: e.target.value
-                                            }))
-                                        }}
-                                        id='trainer-outdate' />
-                                </div>
-                                {
-                                    !outdateUpdating &&
-                                    <label
-                                        htmlFor='trainer-outdate'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            outdateRef.current.focus();
-                                            setOutdateUpdating(prev => !prev);
-                                        }}
-                                    >
-                                        <i class="fas fa-pen"></i>
-                                        Chỉnh sửa
-                                    </label>
-                                }
-                                {
-                                    outdateUpdating &&
-                                    <label
-                                        htmlFor='trainer-outdate'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            setOutdateUpdating(prev => !prev);
-                                            handleUpdate();
-                                        }}
-                                    >
-                                        <i class="fas fa-save"></i>
-                                        Lưu lại
-                                    </label>
-                                }
-                                {
-                                    outdateUpdating &&
-                                    <label
-                                        htmlFor='trainer-outdate'
-                                        className={clsx(styles.inforBtn)}
-                                        onClick={() => {
-                                            setOutdateUpdating(prev => !prev)
-                                        }}
-                                    >
-                                        <i class="fas fa-window-close"></i>
-                                        Hủy
-                                    </label>
-                                }
-                            </div> */}
                         </div>
                     </div>
                 </div>

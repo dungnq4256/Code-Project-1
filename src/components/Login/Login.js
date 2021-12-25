@@ -4,25 +4,72 @@ import logo from './../../store/imgs/logo.png'
 import './Login.css'
 import authAPI from '../../api/authAPI'
 import { useNavigate } from 'react-router-dom'
+import axiosClient from '../../api/axiosClient'
 
 function Login() {
     const navigate = useNavigate();
     let [userState, setUserState] = useState({ role: 'admin' });
     let [loginFalse, setLoginFalse] = useState(false);
 
+    const navigateTrainer = async () => {
+        const url = 'https://61bca039d8542f00178248c3.mockapi.io/api/trainers';
+        let response = await axiosClient.get(url);
+        let target = response.find(trainer => {
+            return trainer.username == userState.username;
+        })
+        console.log(target);
+        navigate(`/trainer/${target.id}`)
+    }
+
+    const navigateCustomer = async () => {
+        const url = 'https://61bca039d8542f00178248c3.mockapi.io/api/customers';
+        let response = await axiosClient.get(url);
+        let target = response.find(customer => {
+            return customer.username == userState.username;
+        })
+        console.log(target);
+        navigate(`/customer/${target.id}`)
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault();
+        if(!(userState.username && userState.password)) {
+            alert("Hãy nhập đủ tên đăng nhập và mật khẩu");
+            return;
+        }
+        axiosClient.put('https://61bca039d8542f00178248c3.mockapi.io/api/users/:1', {username: 'd', password: '1', role: 2})
         if (!(userState.username && userState.password)) return;
         else {
-            let user = {
-                phone: userState.username,
-                password: userState.password
+            let userInput = {
+                username: userState.username,
+                password: userState.password,
+                role: userState.role
             }
-            const response = await authAPI.login(user);
-            if(response) navigate('/');
+            const response = await authAPI.login();
+            const ok = response.some((user) => {
+                console.log(user)
+                return user.username == userInput.username && 
+                    user.password == userInput.password &&
+                    user.role == userInput.role;
+            })
+
+            if(ok) {
+
+                switch (userInput.role) {
+                    case 'admin':
+                        navigate('/admin');
+                        break;
+                    case 'trainer':
+                        navigateTrainer();
+                        break;
+                    case 'customer':
+                        navigateCustomer();
+                        break;
+                    default: navigate('/');
+                }
+            }
             else {
-                loginFalse = true;
-                setLoginFalse(loginFalse);
+                setLoginFalse(prev => true)
             }
         }
     }
@@ -99,6 +146,7 @@ function Login() {
                                 />
                             </div>
                             {loginFalse && <h2 className="login-false">Tên đăng nhập hoặc mật khẩu không đúng</h2>}
+                            {!loginFalse && <h2 className="login-false login-false-empty">.</h2>}
                             <button className={userState.username && userState.password ? "usersubmit-btn" : "usersubmit-btn inactive"}>Đăng nhập</button>
                         </form>
                     </div>

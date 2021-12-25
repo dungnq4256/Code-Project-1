@@ -3,20 +3,20 @@ import { Link, NavLink } from "react-router-dom";
 import './Header.css'
 import logo from './../../store/imgs/logo.png';
 import { useSelector } from 'react-redux'
-import authAPI from "./../../api/authAPI";
+import { useNavigate } from 'react-router-dom'
 
 
 function Header() {
     let user = useSelector(store => store.auth.user)
-    user = 1;
     let [showOption, setShowOpTion] = useState(false);
+    let navigate = useNavigate();
 
     const handleShowOption = () => {
         setShowOpTion(!showOption);
     }
 
     const handleLogout = () => {
-        authAPI.logout();
+        navigate('/login')
     }
 
     return (
@@ -31,8 +31,12 @@ function Header() {
                         <nav className="header-navbar">
                             <ul className="nav-list">
                                 <li className="nav-item"><NavLink to="/">Trang chủ</NavLink></li>
-                                <li className="nav-item"><NavLink to="/">Dịch vụ</NavLink></li>
-                                <li className="nav-item"><NavLink to="/">Góp ý - Phản hồi</NavLink></li>
+                                <li className="nav-item"><NavLink to="/dich-vu">Dịch vụ</NavLink></li>
+                                <li className="nav-item"><NavLink to="/su-kien">Sự kiện</NavLink></li>
+                                <li className="nav-item"><NavLink to="/goi-tap">Gói tập</NavLink></li>
+                                
+                                {/* <li className="nav-item"><NavLink to="/">Dịch vụ</NavLink></li>
+                                <li className="nav-item"><NavLink to="/">Góp ý - Phản hồi</NavLink></li> */}
                             </ul>
                         </nav>
                     </div>
@@ -49,7 +53,7 @@ function Header() {
                             {showOption &&
                                 <div className="header-user-option">
                                     <ul className="user-option-list">
-                                        <li onClick={handleShowOption} className='user-option-item'><Link to="/myinfor">Thông tin cá nhân</Link></li>
+                                        <li onClick={handleShowOption} className='user-option-item'><Link to="#">Thông tin cá nhân</Link></li>
                                         <li onClick={() => {
                                             handleShowOption();
                                             handleLogout();

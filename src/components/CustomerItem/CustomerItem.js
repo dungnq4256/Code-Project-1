@@ -1,39 +1,95 @@
-import React, { useParams } from 'react'
+import React, { useParams, useState, useEffect } from 'react'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 
-import avatar from './../../store/imgs/trainer1.jpg'
+import avatar from './../../store/imgs/avatar.jpg'
 
 import styles from './CustomerItem.module.css'
+import axiosClient from '../../api/axiosClient'
+import { Popup } from './../'
+import { useNavigate } from 'react-router-dom'
 
 //Từng học viên trong danh sách các học viên
 
-function CustomerItem() {
-    const id = 1
+function CustomerItem({ infor, trainer }) {
+    const navigate = useNavigate();
+    let [showPopup, setShowPopup] = useState(false);
+
+    const handleDeleteCustomer = async () => {
+        const url = `https://61bca039d8542f00178248c3.mockapi.io/api/customers/${infor.id}`
+        const params = {
+            "status": "Không hoạt động"
+        }
+        const response = await axiosClient.put(url, params)
+        if (response.status) {
+            infor.status = "Không hoạt động"
+            setShowPopup(prev => !prev)
+        }
+    }
+
+    const handleRescover = async () => {
+        const url = `https://61bca039d8542f00178248c3.mockapi.io/api/customers/${infor.id}`
+        const params = {
+            "status": "Hoạt động"
+        }
+        const response = await axiosClient.put(url, params)
+        if (response.status) {
+            infor.status = "Hoạt động"
+            setShowPopup(prev => !prev)
+        }
+    }
+
+    useEffect(() => {
+        if (showPopup) {
+            var id = setTimeout(() => {
+                showPopup = false;
+                setShowPopup(showPopup);
+            }, 2000)
+        }
+        return () => {
+            clearTimeout(id);
+        }
+    }, [showPopup])
+
     return (
         <div to='/' className={clsx(styles.wrapper)}>
-            <Link to={`detail/${id}`} className={clsx(styles.content)}>
+            <Link to={trainer ? '' : `/admin/customers/detail/${infor.id}`} className={clsx(styles.content)}>
                 <div className={clsx(styles.avatarField)}>
                     <div
-                        style={{
-                            height: '50px',
-                            width: '50px',
-                            background: `url(${avatar})`
-                        }}
+                        style={
+                            infor.avatarURL ? {
+                                background: `url(${infor.avatarURL})`,
+                                backgroundPosition: 'center',
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                                height: '50px',
+                                width: '50px',
+                            } : {
+                                background: `url(${avatar})`,
+                                backgroundPosition: 'center',
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                                height: '50px',
+                                width: '50px'
+                            }}
                         className={clsx(styles.avatarImg)}
                     >
                     </div>
-                    <div className={clsx(styles.name)}>Nguyễn Văn Đương</div>
+                    <div className={clsx(styles.name)}>{infor.name}</div>
                 </div>
 
                 <div className={clsx(styles.inforField)}>
-                    <div className={clsx(styles.inforContent, styles.status)}>Hoạt động</div>
+                    {
+                        infor.status == "Hoạt động"
+                            ? <div className={clsx(styles.inforContent, styles.status)}>Hoạt động</div>
+                            : <div className={clsx(styles.inforContent, styles.status, styles.inactive)}>Không hoạt động</div>
+                    }
                     {/* <div className={clsx(styles.inforContent, styles.status)}>Hết hạn</div> */}
                 </div>
 
                 <div className={clsx(styles.inforField)}>
                     <i class={clsx(styles.inforIcon, styles.gender, "fas fa-male")}></i>
-                    <div className={clsx(styles.inforContent)}>Nam</div>
+                    <div className={clsx(styles.inforContent)}>{infor.gender}</div>
                 </div>
 
                 <div className={clsx(styles.inforField)}>
@@ -43,7 +99,7 @@ function CustomerItem() {
                             color: 'rgb(241, 122, 142)'
                         }}
                     ></i>
-                    <div className={clsx(styles.inforContent)}>21-12-2001</div>
+                    <div className={clsx(styles.inforContent)}>{infor.birthday}</div>
                 </div>
 
                 <div className={clsx(styles.inforField)}>
@@ -53,7 +109,7 @@ function CustomerItem() {
                             color: 'rgb(184, 184, 58)'
                         }}
                     ></i>
-                    <div className={clsx(styles.inforContent)}>0982912987</div>
+                    <div className={clsx(styles.inforContent)}>{infor.phone}</div>
                 </div>
 
                 <div className={clsx(styles.inforField)}>
@@ -68,21 +124,33 @@ function CustomerItem() {
 
             </Link>
 
-            <div className={clsx(styles.updateField)}>
-                <div className={clsx(styles.inforField, styles.editField)}>
-                    <i class={clsx(styles.editIcon, "fas fa-edit")}></i>
-                    <div className={clsx(styles.updateContent, styles.edit)}>
-                        Sửa
+            {
+                !trainer &&
+                <div className={clsx(styles.updateField)}>
+                    <div className={clsx(styles.inforField, styles.editField)}>
+                        <i class={clsx(styles.editIcon, "fas fa-edit")}></i>
+                        <Link to={`detail/${infor.id}`} className={clsx(styles.updateContent, styles.edit)}>
+                            Sửa
+                        </Link>
                     </div>
-                </div>
 
-                <div className={clsx(styles.inforField, styles.deleteField)}>
-                    <i class={clsx(styles.deleteIcon, "fas fa-user-minus")}></i>
-                    <div className={clsx(styles.updateContent, styles.delete)}>
-                        Xóa
+                    <div className={clsx(styles.inforField, styles.deleteField)}>
+                        <i class={clsx(styles.deleteIcon, "fas fa-user-minus")}></i>
+                        {infor.status == "Hoạt động" && <div
+                            onClick={handleDeleteCustomer}
+                            className={clsx(styles.updateContent, styles.delete)}>
+                            Xóa
+                        </div>}
+                        {infor.status !== "Hoạt động" && <div
+                            onClick={handleRescover}
+                            className={clsx(styles.updateContent, styles.delete)}>
+                            Khôi phục
+                        </div>}
                     </div>
                 </div>
-            </div>
+            }
+
+            <Popup trigger={showPopup} message="Thành công" />
         </div>
     )
 }
