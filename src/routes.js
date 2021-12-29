@@ -5,12 +5,27 @@ import Notfoundpage from './pages/Notfoundpage';
 import AdminPage from './pages/AdminPage';
 import TrainerPage from './pages/TrainerPage';
 import CustomerPage from './pages/CustomerPage';
+import ServicePage from './pages/ServicePage';
+import EventPage from './pages/EventPage';
+import PackagePage from './pages/PackagePage';
 
 
 const routes = [
     {
         path: '/',
         element: <Homepage/>
+    },
+    {
+        path: '/service',
+        element: <ServicePage />
+    },
+    {
+        path: '/event',
+        element: <EventPage />
+    },
+    {
+        path: '/package',
+        element: <PackagePage />
     },
     {
         path: '/login',

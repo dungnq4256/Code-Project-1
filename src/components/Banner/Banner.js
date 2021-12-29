@@ -30,7 +30,6 @@ function Banner() {
 
 
     useEffect(() => {
-        console.log("thaydoi")
         let timerID = setInterval(() => {
             if (counter < 5) {
                 counter = counter + 1;
@@ -42,7 +41,6 @@ function Banner() {
         }, 5000)
 
         return () => {
-            console.log('clear')
             clearInterval(timerID);
         }
     }, [counter])

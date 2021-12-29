@@ -7,8 +7,9 @@ import authAPI from "./../../api/authAPI";
 
 
 function Header() {
+    
     let user = useSelector(store => store.auth.user)
-    user = 1;
+    //user = 1;
     let [showOption, setShowOpTion] = useState(false);
 
     const handleShowOption = () => {
@@ -30,9 +31,10 @@ function Header() {
                         </div>
                         <nav className="header-navbar">
                             <ul className="nav-list">
-                                <li className="nav-item"><NavLink to="/">Trang chủ</NavLink></li>
-                                <li className="nav-item"><NavLink to="/">Dịch vụ</NavLink></li>
-                                <li className="nav-item"><NavLink to="/">Góp ý - Phản hồi</NavLink></li>
+                            <li className="nav-item"><NavLink to="/">Trang chủ</NavLink></li>
+                                <li className="nav-item"><NavLink to="/service">Dịch vụ</NavLink></li>
+                                <li className="nav-item"><NavLink to="/event">Sự kiện</NavLink></li>
+                                <li className="nav-item"><NavLink to="/package">Gói tập</NavLink></li>
                             </ul>
                         </nav>
                     </div>

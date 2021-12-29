@@ -2,6 +2,10 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Login from './Login/Login';
 import Banner from './Banner/Banner';
+import Content from './Content/Content';
+import Content_Service from './Content_Service/Content_Service';
+import Content_Event from './Content_Event/Content_Event';
+import Content_Package from './Content_Package/Content_Package';
 import ScrollToTop from './ScrollToTop/ScrollToTop';
 import Admin from './Admin/Admin';
 import TrainerList from './TrainerList/TrainerList';
@@ -25,3 +29,4 @@ export { Header, Footer, Login, Banner, ScrollToTop }
 export { Admin, TrainerList, CustomerList, Category, TrainerItem, CustomerItem, AdminWelcome };
 export { CustomerDetail, TrainerDetail, AdminHeader, Schedule };
 export { AddTrainer, AddCustomer, Popup, CustomerInfor, TrainerInfor };
+export { Content, Content_Event, Content_Service, Content_Package};

@@ -13,14 +13,20 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         if (!(userState.username && userState.password)) return;
-        else {
+        else { 
             let user = {
+                role: userState.role,
                 phone: userState.username,
                 password: userState.password
             }
+            console.log(user);
             const response = await authAPI.login(user);
-            if(response) navigate('/');
-            else {
+            if (response && response.data && response.data.status) {
+                if (userState.role === 'admin') navigate('/admin');
+                else if (userState.role === 'trainer') navigate('/');
+                else navigate('/')
+            } 
+            if (response && !response.data.status) {
                 loginFalse = true;
                 setLoginFalse(loginFalse);
             }
