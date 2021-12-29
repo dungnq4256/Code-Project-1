@@ -134,6 +134,10 @@
     color: var(--primary-color);
 }
 
+.login-false-empty {
+    color: transparent;
+}
+
 .usersubmit-btn {
     margin-top: 10px;
     width: 100%;

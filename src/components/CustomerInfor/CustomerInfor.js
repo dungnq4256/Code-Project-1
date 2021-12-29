@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import clsx from 'clsx'
 import { Popup } from './../'
-import userProfileAPI from '../../api/userProfileAPI'
 import avatar from './../../store/imgs/avatar.jpg'
+import axiosClient from '../../api/axiosClient'
 
 import styles from './CustomerInfor.module.css'
 
 // Trang này có thể hiển thị với cả học viên, huấn luyện viên và admin
 // Thông tin chi tiết của mỗi học viên
 
-function CustomerInfor() {
+function CustomerInfor({ id }) {
     let [nameUpdating, setNameUpdating] = useState(false);
     let [phoneUpdating, setPhoneUpdating] = useState(false);
     let [birthdayUpdating, setBirthdayUpdating] = useState(false);
@@ -27,16 +27,7 @@ function CustomerInfor() {
     let registerRef = useRef(null);
     let outdateRef = useRef(null);
 
-    let [userProfile, setUserProfile] = useState({
-        name: '',
-        phone: '',
-        birthday: '',
-        gender: 'Nam',
-        address: '',
-        create_at: '',
-        expire_at: '',
-        avatar_url: '',
-    });
+    let [userProfile, setUserProfile] = useState({});
 
     // Để show Popup sau khi cập nhật thành công
     useEffect(() => {
@@ -53,11 +44,21 @@ function CustomerInfor() {
     // Lấy profile về
     useEffect(() => {
         (async () => {
-            const response = await userProfileAPI.getProfile();
-            if (response && response.status && response.status.data) {
-                userProfile = { ...response.data.data };
-                setUserProfile(userProfile);
-            }
+            const url = `https://61bca039d8542f00178248c3.mockapi.io/api/customers/${id}`;
+            const response = await axiosClient.get(url);
+            console.log(response);
+            setUserProfile(prev => ({
+                name: response.name,
+                phone: response.phone,
+                birthday: response.birthday,
+                gender: response.gender,
+                address: response.address,
+                register: response.register,
+                outdate: response.outdate,
+                avatarURL: response.avatarURL,
+            }))
+            userProfile = { ...response }
+            console.log(userProfile)
         })()
     }, [])
 
@@ -65,13 +66,12 @@ function CustomerInfor() {
 
     const handleUploadAvatar = async (e) => {
         // Upload lên Cloudinary
-
         const files = e.target.files;
         const data = new FormData();
         data.append('file', files[0]);
         data.append('upload_preset', 'rubygymimages');
 
-        const response = await fetch('https://api.cloudinary.com/v1_1/dzgdwey0f/image/upload', {
+        let response = await fetch('https://api.cloudinary.com/v1_1/dzgdwey0f/image/upload', {
             method: 'POST',
             body: data
         })
@@ -79,46 +79,26 @@ function CustomerInfor() {
         const file = await response.json();
         userProfile = {
             ...userProfile,
-            avatar_url: file.secure_url
+            avatarURL: file.secure_url
         }
 
-        // const response = await userProfileAPI.updateAvatar(data)
-
         setUserProfile(userProfile)
+        console.log(userProfile)
+        const url = `https://61bca039d8542f00178248c3.mockapi.io/api/customers/${id}`
+        let response1 = await axiosClient.put(url, { ...userProfile })
+        setShowPopup(prev => !prev)
         console.log(file);
         console.log(userProfile)
-
-        //================================================================
-
-        // Upload lên server
-        // const file = e.target.files[0];
-        // const formData = new FormData();
-        // formData.append('File', file);
-
-        // const response = await userProfileAPI.updateAvatar(formData);
-
-        // if(response && response.status && response.data) {
-        //     userProfile = {
-        //         ...userProfile,
-        //         avatar_url: response.data
-        //     }
-        //     setUserProfile(userProfile);
-        // }
-        // if(response && !response.status) {
-        //     alert(response.message)
-        // }
     }
 
 
     //Update Profile
     const handleUpdate = async () => {
         console.log(userProfile);
+        const url = `https://61bca039d8542f00178248c3.mockapi.io/api/customers/${id}`
+        const response = await axiosClient.put(url, { ...userProfile })
         setShowPopup(prev => !prev)
-        // const response = await userProfileAPI.updateProfile(userProfile);
-        // if(response && response.status) setShowPopup(prev => !prev);
-        // if(response && !response.status && response.message) {
-        //     alert(response.message)
-        // }
+
     }
 
 
@@ -130,29 +110,31 @@ function CustomerInfor() {
                 <div className="row">
 
                     {/* Avatar */}
+                    {console.log(userProfile.avatarURL)}
                     <div className="col l-5 m-0 c-0">
-                        <div 
+                        <div
                             className={clsx(styles.avatar)}
-                            style={{
-                                backgroundImage: userProfile.avatar_url ?
-                                    `url(${userProfile.avatar_url})` :
-                                    `url(${avatar})`,
-                                backgroundPosition: 'center',
-                                backgroundSize: 'cover',
-                                backgroundRepeat: 'no-repeat'
-                            }}
+                            style={
+                                userProfile.avatarURL ? {
+                                    background: `url(${userProfile.avatarURL}) no-repeat center / cover`
+                                } : {
+                                    background: `url(${avatar})`,
+                                    backgroundPosition: 'center',
+                                    backgroundSize: 'cover',
+                                    backgroundRepeat: 'no-repeat',
+                                }}
                         >
-                            <label 
+                            <label
                                 htmlFor="avatarChoose"
                                 className={clsx(styles.chooseAvatar)}
                             >
                                 <i className={clsx(styles.chooseAvatarIcon, "fas fa-camera")}></i>
                             </label>
-                            <input 
-                                type="file" 
+                            <input
+                                type="file"
                                 id="avatarChoose"
                                 hidden
-                                onChange={ handleUploadAvatar }
+                                onChange={handleUploadAvatar}
                             />
                         </div>
                     </div>

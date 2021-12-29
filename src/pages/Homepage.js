@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Banner, CustomerDetail, Footer, Header ,Content } from '../components'
+import { Banner, Content, Footer, Header  } from '../components'
 import Calendar from 'react-calendar'
 
 function Homepage() {
@@ -16,7 +16,7 @@ function Homepage() {
         <>
             <Header />
             <Banner />
-            <Content />
+            <Content/>
             <Footer />
         </>
     )

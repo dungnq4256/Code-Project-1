@@ -64,6 +64,10 @@
     background-color: rgba(144, 230, 144, 0.5);
 }
 
+.inactive {
+    background-color: rgba(223, 63, 63, 0.5);
+}
+
 .inforIcon {
     margin-bottom: 8px;
     color: #333;
@@ -110,5 +114,6 @@
 
 .updateContent {
     color: white;
+    text-decoration: none;
 }
 

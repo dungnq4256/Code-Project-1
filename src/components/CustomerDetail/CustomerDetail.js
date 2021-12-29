@@ -9,7 +9,7 @@ import { Schedule, AdminHeader, CustomerInfor } from './../';
 // CustomerDetail sẽ gồm Header + CustomerInfor
 
 function CustomerDetail({ admin }) {
-    const id = useParams();
+    const { id } = useParams();
 
     return (
         <div className={clsx(styles.customerWrapper)}>
@@ -17,7 +17,7 @@ function CustomerDetail({ admin }) {
             <div className={clsx(styles.content)}>
                 <section className={clsx(styles.contentField)}>
                     <h2 className={clsx(styles.heading)}>Thông tin cá nhân</h2>
-                    <CustomerInfor />
+                    <CustomerInfor id={id}/>
                 </section>
 
                 <section className={clsx(styles.contentField)}>

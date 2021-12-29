@@ -6,7 +6,7 @@ import styles from './Category.module.css'
 import avatar from './../../store/imgs/logo.png'
 
 function Category() {
-    let [trainerCustomer, setTrainerCustomer] = useState(false);
+    // let [trainerCustomer, setTrainerCustomer] = useState(false);
     return (
         <div className={clsx(styles.wrapper)}>
             <div className={clsx(styles.header)}>
@@ -16,7 +16,7 @@ function Category() {
                         Admin
                     </div>
                     <div className={clsx(styles.subHeading)}>
-                        Admin
+                        {/* Admin */}
                     </div>
                 </div>
             </div>
@@ -35,10 +35,10 @@ function Category() {
                     <i className={clsx(styles.categoryIcon, "fas fa-users")}></i>
                     <Link className={clsx(styles.itemLink)} to="customers">Học viên</Link>
                 </li>
-                
+
                 <li className={clsx(styles.categoryItem)}>
-                    <i className={clsx(styles.categoryIcon, "fas fa-calendar-week")}></i>
-                    <Link className={clsx(styles.itemLink)} to="events">Sự kiện</Link>
+                    <i className={clsx(styles.categoryIcon, "fas fa-users")}></i>
+                    <Link className={clsx(styles.itemLink)} to="customers">Đăng xuất</Link>
                 </li>
             </ul>
         </div>

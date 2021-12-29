@@ -36,11 +36,11 @@ const routes = [
         element: <AdminPage/>
     },
     {
-        path: '/trainer',
+        path: '/trainer/:id',
         element: <TrainerPage/>
     },
     {
-        path: '/customer',
+        path: '/customer/:id',
         element: <CustomerPage/>
     },
     {

@@ -2,47 +2,57 @@ import React from 'react'
 import TimeTable from 'react-timetable-events'
 
 function Timetablee() {
+
+    let events = {
+        "Monday": [
+            {
+                endTime: new Date('2018-02-23T08:00:00'),
+                name: '',
+                startTime: new Date('2018-02-23T07:00:00'),
+                type: 'custom'
+            }
+        ],
+        "Tuesday": [],
+        "Wednesday": [
+            {
+                endTime: new Date('2018-02-23T16:00:00'),
+                name: '',
+                startTime: new Date('2018-02-23T15:00:00'),
+                type: 'custom'
+            }
+        ],
+        "Thursday": [],
+        "Friday": [
+            {
+                endTime: new Date('2018-02-23T17:00:00'),
+                name: '',
+                startTime: new Date('2018-02-23T16:00:00'),
+                type: 'custom'
+            }
+        ],
+        "Saturday": [],
+        "Sunday": [
+            {
+                endTime: new Date('2018-02-23T19:00:00'),
+                name: '',
+                startTime: new Date('2018-02-23T18:00:00'),
+                type: 'custom'
+            }
+        ],
+    };
+
+    // events.Tuesday = [
+    //     {
+    //         endTime: new Date('2018-02-23T10:00:00'),
+    //         name: '',
+    //         startTime: new Date('2018-02-23T08:00:00'),
+    //         type: 'custom'
+    //     }
+    // ]
+
     return (
         <TimeTable
-            events={{
-                monday: [
-                    {
-                        endTime: new Date('2018-02-23T10:00:00'),
-                        id: 1,
-                        name: 'Nguyễn Văn Đương',
-                        startTime: new Date('2018-02-23T08:00:00'),
-                        type: 'error'
-                    }
-                ],
-                tuesday: [
-                    {
-                        endTime: new Date('2018-02-22T17:00:00'),
-                        id: 2,
-                        name: 'Nguyễn Quang Dũng',
-                        startTime: new Date('2018-02-22T15:00:00'),
-                        type: 'error'
-                    },
-                    {
-                        endTime: new Date('2018-02-22T13:00:00'),
-                        id: 3,
-                        name: 'Nguyễn Văn Đương',
-                        startTime: new Date('2018-02-22T11:00:00'),
-                        type: 'custom'
-                    }
-                ],
-                thursday: [],
-                wednesday: [],
-                friday: [
-                    {
-                        endTime: new Date('2018-02-22T16:00:00'),
-                        id: 4,
-                        name: 'Nguyễn Quang Dũng',
-                        startTime: new Date('2018-02-22T14:00:00'),
-                        type: 'custom'
-                    }
-                ]
-            }}
-            // getDayLabel={	(day: string) => upperCase(day)}
+            events={events}
             hoursInterval={{
                 from: 7,
                 to: 21
@@ -86,7 +96,7 @@ function Timetablee() {
                 </div>
             )}
             getDayLabel={(day) => day}
-            timeLabel="Timeee"
+            timeLabel="Time"
         />
     )
 }
