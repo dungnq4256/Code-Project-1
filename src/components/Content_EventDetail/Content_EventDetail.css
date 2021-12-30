@@ -1,0 +1,87 @@
+.banner-event-detail{
+    margin-top: 75px;
+    width: 100%;
+    height: auto;
+}
+.content-event-detail{
+    display: flex;
+    justify-content: center;
+    background-color: #F0F0F0;
+    width: 100%;
+    height: 1300px;
+
+}
+.event-wrapper{
+    margin-top: 40px;
+    display: flex;
+    width: 1160px;
+    height: 1150px;
+    flex-direction: column;
+    background-color: white;
+
+}
+.eventpage{
+    text-decoration: none;
+    color: black;
+}
+.event-detail{
+    margin: 56px 106px;
+}
+.event-wrapper img{
+    width: 945px;
+    height: auto;
+}
+.title-event{
+    font-weight: 700;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    margin: 15px 0 10px 0;
+    text-align: justify;
+    letter-spacing: 0.02em;
+}
+.date{
+    width: 130px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 31px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: justify;
+    letter-spacing: 0.02em;
+    margin-bottom: 15px;
+}
+
+.detail-event{
+    margin-top: 35px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 38px;
+    display: flex;
+    align-items: center;
+    text-align: justify;
+    letter-spacing: 0.02em;
+}
+
+.abc{
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 38px;
+    display: flex;
+    align-items: center;
+    text-align: justify;
+    letter-spacing: 0.02em;
+    margin-top: 10px;
+}
+.infor-abc{
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 38px;
+    display: flex;
+    align-items: center;
+    text-align: justify;
+    letter-spacing: 0.02em;
+    margin-left: 30px;
+}
+

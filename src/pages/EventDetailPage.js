@@ -1,5 +1,5 @@
 import React ,{useEffect} from 'react'
-import { Footer, Header, Content_Event} from '../components'
+import { Footer, Header, Content_EventDetail} from '../components'
 
 function Su_kien() {
     useEffect(() => {
@@ -8,7 +8,7 @@ function Su_kien() {
     return (
         <>
             <Header />
-            <Content_Event />
+            <Content_EventDetail />
             <Footer />
         </>
     )

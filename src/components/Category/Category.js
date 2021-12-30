@@ -37,8 +37,8 @@ function Category() {
                 </li>
 
                 <li className={clsx(styles.categoryItem)}>
-                    <i className={clsx(styles.categoryIcon, "fas fa-users")}></i>
-                    <Link className={clsx(styles.itemLink)} to="customers">Đăng xuất</Link>
+                    <i className={clsx(styles.categoryIcon, "fas fa-sign-out-alt")}></i>
+                    <Link className={clsx(styles.itemLink)} to="/">Đăng xuất</Link>
                 </li>
             </ul>
         </div>

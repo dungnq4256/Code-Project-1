@@ -9,7 +9,7 @@ function Homepage() {
 
 
     useEffect(() => {
-        window.document.title = 'Home'
+        window.document.title = 'Trang chủ'
     }, [])
 
     return (

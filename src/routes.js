@@ -7,6 +7,7 @@ import TrainerPage from './pages/TrainerPage';
 import CustomerPage from './pages/CustomerPage';
 import ServicePage from './pages/ServicePage';
 import EventPage from './pages/EventPage';
+import EventDetailPage from './pages/EventDetailPage';
 import PackagePage from './pages/PackagePage';
 
 
@@ -22,6 +23,10 @@ const routes = [
     {
         path: '/event',
         element: <EventPage />
+    },
+    {
+        path: '/event/dieu-uoc-giang-sinh',
+        element: <EventDetailPage />
     },
     {
         path: '/package',

@@ -4,7 +4,7 @@ import { Login, Footer } from '../components'
 function Loginpage() {
 
     useEffect(() => {
-        window.document.title = 'Login'
+        window.document.title = 'Đăng nhập'
         
     }, [])
 

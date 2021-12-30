@@ -1,7 +1,10 @@
-import React from 'react'
+import React ,{useEffect} from 'react'
 import { Footer, Header, Content_Package} from '../components'
 
 function Goi_tap() {
+    useEffect(() => {
+        window.document.title = 'Gói tập'
+    }, [])
     return (
         <>
             <Header />

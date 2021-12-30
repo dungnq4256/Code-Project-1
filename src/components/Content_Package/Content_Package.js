@@ -6,7 +6,7 @@ import goitap1 from './../../store/imgs/goitap1.png';
 
 function Content_Package() {
     return (
-        <div>
+        <div className='package'>
             <img src={goitap} alt=""/>
             <img src={goitap1} alt=""/>
         </div>

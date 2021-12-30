@@ -1,12 +1,11 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 import "./Content_Event.css";
 import sukien from "./../../store/imgs/sukien.png";
 import sk1_event from "./../../store/imgs/sk1_event.png";
 import sk2_event from "./../../store/imgs/sk2_event.png";
 import sk3_event from "./../../store/imgs/sk3_event.png";
-import sk4_event from "./../../store/imgs/sk4_event.png";
-import sk5_event from "./../../store/imgs/sk5_event.png";
-import sk6_event from "./../../store/imgs/sk6_event.png";
+
 
 function Content_Event() {
     return (
@@ -27,9 +26,9 @@ function Content_Event() {
                                     src={sk1_event}
                                     alt=""
                                 />
-                                <div className="event-name">
+                                <Link className="event-name" to="/event/dieu-uoc-giang-sinh">
                                     ĐIỀU ƯỚC GIÁNG SINH
-                                </div>
+                                </Link>
                                 <div className="event-date">06-12-2021</div>
                                 <div className="event-ct">
                                     Chào mừng Giáng Sinh sắp tới, cả nhà cùng
@@ -38,10 +37,10 @@ function Content_Event() {
                                     giản, chỉ cần tham gia là có quà mà phần
                                     thưởng thì vô cùng hấp dẫn và giá trị nhé!
                                 </div>
-                                <div className="event-next">
+                                <Link className="event-next" to="/event/dieu-uoc-giang-sinh">
                                     TIẾP
                                     <i class="fas fa-arrow-right"></i>
-                                </div>
+                                </Link>
                             </div>
                         </div>
                         <div className="col l-4">
@@ -70,56 +69,6 @@ function Content_Event() {
                                 <div className="event-name">SỰ KIỆN 3</div>
                                 <div className="event-date">06-12-2021</div>
                                 <div className="event-ct">SỰ KIỆN 3</div>
-                                <div className="event-next">
-                                    TIẾP
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col l-4">
-                            <div className="event">
-                                <img
-                                    className="event_img"
-                                    src={sk4_event}
-                                    alt=""
-                                />
-                                <div className="event-name">SỰ KIỆN 4</div>
-                                <div className="event-date">06-12-2021</div>
-                                <div className="event-ct">SỰ KIỆN 4</div>
-                                <div className="event-next">
-                                    TIẾP
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col l-4">
-                            <div className="event">
-                                <img
-                                    className="event_img"
-                                    src={sk5_event}
-                                    alt=""
-                                />
-                                <div className="event-name">SỰ KIỆN 5</div>
-                                <div className="event-date">06-12-2021</div>
-                                <div className="event-ct">SỰ KIỆN 5</div>
-                                <div className="event-next">
-                                    TIẾP
-                                    <i class="fas fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col l-4">
-                            <div className="event">
-                                <img
-                                    className="event_img"
-                                    src={sk6_event}
-                                    alt=""
-                                />
-                                <div className="event-name">SỰ KIỆN 6</div>
-                                <div className="event-date">06-12-2021</div>
-                                <div className="event-ct">SỰ KIỆN 6</div>
                                 <div className="event-next">
                                     TIẾP
                                     <i class="fas fa-arrow-right"></i>

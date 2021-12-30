@@ -52,6 +52,7 @@
     height: auto;
 }
 .event-name{
+    text-decoration: none;
     display: flex;
     margin: 10px 0 0 25px;
     font-weight: 600;
@@ -86,4 +87,9 @@
     justify-content: space-between;
     margin-right: 25px;
     margin-left: auto;
+    text-decoration: none;
+    color: #151515;
+}
+.event-next:hover{
+    color: #C20518;
 }
