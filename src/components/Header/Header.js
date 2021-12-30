@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import './Header.css'
 import logo from './../../store/imgs/logo.png';
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import authAPI from './../../api/authAPI'
 
 
 function Header() {
     
-    let user = useSelector(store => store.auth.user)
+    let user = localStorage.getItem('user');
+    let role = localStorage.getItem('role');
+
     let [showOption, setShowOpTion] = useState(false);
     let navigate = useNavigate();
 
@@ -17,6 +19,7 @@ function Header() {
     }
 
     const handleLogout = () => {
+        authAPI.logout();
         navigate('/login')
     }
 
@@ -46,12 +49,16 @@ function Header() {
                     }
                     {user &&
                         <div className="header-user" onClick={handleShowOption}>
-                            <h2 className="header-user-name">{user.name}</h2>
+                            <h2 className="header-user-name">
+                                {/* <span>{role == 'trainer' ? "Huấn luyện viên" : "Học viên"}</span> */}
+                                <span>{user}</span>
+                            </h2>
                             <i className="fas fa-user-circle header-user-icon"></i>
                             {showOption &&
                                 <div className="header-user-option">
                                     <ul className="user-option-list">
-                                        <li onClick={handleShowOption} className='user-option-item'><Link to="#">Thông tin cá nhân</Link></li>
+                                        <li onClick={handleShowOption} className='user-option-item'>
+                                            <Link to={`/${localStorage.getItem('role')}/${localStorage.getItem('id')}`}>Thông tin cá nhân</Link></li>
                                         <li onClick={() => {
                                             handleShowOption();
                                             handleLogout();

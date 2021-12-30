@@ -10,6 +10,18 @@ import { useNavigate } from 'react-router-dom'
 
 function AddCustomer() {
     let navigate = useNavigate();
+    let [trainers, setTrainers] = useState([]);
+
+    const getProfile = async () => {
+        const url = 'https://61bca039d8542f00178248c3.mockapi.io/api/trainers';
+        const response = await axiosClient.get(url);
+        console.log(response)
+        setTrainers(prev => response)
+    }
+
+    useEffect(() => {
+        getProfile();
+    }, [])
 
     let [showPopup, setShowPopup] = useState(false);
 
@@ -51,12 +63,15 @@ function AddCustomer() {
         if (!(user.username && user.password && customer.name
             && customer.birthday && customer.gender && customer.address
             && customer.register && customer.outdate && customer.phone
+            && customer.trainerUsername && customer.trainerUsername != "Chọn huấn luyện viên"
         )) {
             alert("Hãy nhập đủ thông tin");
             return;
         } else {
             const url = 'https://61bca039d8542f00178248c3.mockapi.io/api/customers';
             const response = await axiosClient.post(url, customer);
+            const url2 = 'https://61bca039d8542f00178248c3.mockapi.io/api/users';
+            const response2 = await axiosClient.post(url2, user);
             setShowPopup(prev => !prev);
             setTimeout(() => {
                 navigate('/admin/customers');
@@ -229,6 +244,25 @@ function AddCustomer() {
                                         />
                                     </div>
 
+                                    <div className={clsx(styles.contentField)}>
+
+                                        <i className="fas fa-transgender"></i>
+                                        <select
+                                            onChange={(e) => {
+                                                setCustomer(prev => ({
+                                                    ...customer,
+                                                    "trainerUsername": e.target.value
+                                                }))
+                                                console.log(customer)
+                                            }}
+                                        >
+                                            <option value="Chọn">Chọn huấn luyện viên</option>
+                                            {trainers.map(trainer => {
+                                                return <option value={trainer.username}>{trainer.name}</option>
+                                            })}
+                                        </select>
+                                    </div>
+
 
                                     <div className={clsx(styles.contentField)}>
                                         <i className="fas fa-save"></i>
@@ -238,6 +272,7 @@ function AddCustomer() {
                                                 user.username && user.password && customer.name
                                                     && customer.birthday && customer.gender && customer.address
                                                     && customer.register && customer.outdate && customer.phone
+                                                    && customer.trainerUsername && customer.trainerUsername != "Chọn huấn luyện viên"
                                                     ? clsx(styles.trainerAddBtn)
                                                     : clsx(styles.trainerAddBtn, styles.inactive)}>
                                             Thêm huấn luyện viên

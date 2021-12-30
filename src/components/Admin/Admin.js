@@ -18,10 +18,10 @@ function Admin() {
                 <Routes>
                     <Route path="trainers" element={<TrainerList />} />
                     <Route path="trainers/add" element={<AddTrainer />} />
-                    <Route path="trainers/detail/:id" element={<TrainerDetail admin={true}/>} />
+                    <Route path="trainers/detail/:id" element={<TrainerDetail admin trainer={false}/>} />
                     <Route path="customers" element={<CustomerList />} />
                     <Route path="customers/add" element={<AddCustomer />} />
-                    <Route path="customers/detail/:id" element={<CustomerDetail admin={true}/>} />
+                    <Route path="customers/detail/:id" element={<CustomerDetail admin/>} />
                     <Route path="" element={<AdminWelcome />} />
                 </Routes>
             </main >

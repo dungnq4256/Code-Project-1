@@ -54,6 +54,8 @@ function AddTrainer() {
         } else {
             const url = 'https://61bca039d8542f00178248c3.mockapi.io/api/trainers';
             const response = await axiosClient.post(url, trainer);
+            const url2 = 'https://61bca039d8542f00178248c3.mockapi.io/api/users';
+            const response2 = await axiosClient.post(url2, user);
             setShowPopup(prev => !prev)
             setTimeout(() => {
                 navigate('/admin/trainers');

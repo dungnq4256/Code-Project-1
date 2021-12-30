@@ -18,6 +18,8 @@ function Login() {
             return trainer.username == userState.username;
         })
         console.log(target);
+        localStorage.setItem('user', target.name)
+        localStorage.setItem('id', target.id);
         navigate(`/trainer/${target.id}`)
     }
 
@@ -28,6 +30,7 @@ function Login() {
             return customer.username == userState.username;
         })
         console.log(target);
+        localStorage.setItem('id', target.id);
         navigate(`/customer/${target.id}`)
     }
 
@@ -37,7 +40,7 @@ function Login() {
             alert("Hãy nhập đủ tên đăng nhập và mật khẩu");
             return;
         }
-        axiosClient.put('https://61bca039d8542f00178248c3.mockapi.io/api/users/:1', {username: 'd', password: '1', role: 2})
+        // axiosClient.put('https://61bca039d8542f00178248c3.mockapi.io/api/users/:1', {username: 'd', password: '1', role: 2})
         if (!(userState.username && userState.password)) return;
         else {
             let userInput = {
@@ -46,12 +49,18 @@ function Login() {
                 role: userState.role
             }
             const response = await authAPI.login();
-            const ok = response.some((user) => {
+            const ok = response.find((user) => {
                 console.log(user)
                 return user.username == userInput.username && 
                     user.password == userInput.password &&
                     user.role == userInput.role;
             })
+
+            if(ok) {
+                console.log(ok)
+                localStorage.setItem('user', ok.username);
+                localStorage.setItem('role', userInput.role) ;
+            }
 
             if(ok) {
 

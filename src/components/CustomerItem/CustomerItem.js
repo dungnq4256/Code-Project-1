@@ -6,14 +6,40 @@ import avatar from './../../store/imgs/avatar.jpg'
 
 import styles from './CustomerItem.module.css'
 import axiosClient from '../../api/axiosClient'
-import { Popup } from './../'
+import { Popup, MakeSchedule } from './../'
 import { useNavigate } from 'react-router-dom'
 
 //Từng học viên trong danh sách các học viên
 
-function CustomerItem({ infor, trainer }) {
+function CustomerItem({ infor, trainer, admin }) {
     const navigate = useNavigate();
     let [showPopup, setShowPopup] = useState(false);
+    let [makeSchedule, setMakeSchedule] = useState(false);
+
+    // Lấy huấn luyện viên của mình
+    let [trainers, setTrainers] = useState([]);
+    let [myTrainer, setMyTrainer] = useState({});
+
+    // Lấy huấn luyện viên của mình
+    const getProfile = async () => {
+        const url = 'https://61bca039d8542f00178248c3.mockapi.io/api/trainers';
+        const response = await axiosClient.get(url);
+        console.log(response)
+        trainers = response;
+        setTrainers(trainers);
+        console.log(trainers);
+        myTrainer = trainers.find(trainer => {
+            return trainer.username === infor.trainerUsername;
+        })
+        setMyTrainer(myTrainer);
+        // console.log(trainer.name);
+        // console.log(trainer)
+    }
+
+    useEffect(() => {
+        getProfile();
+    }, []);
+
 
     const handleDeleteCustomer = async () => {
         const url = `https://61bca039d8542f00178248c3.mockapi.io/api/customers/${infor.id}`
@@ -119,17 +145,17 @@ function CustomerItem({ infor, trainer }) {
                             color: 'rgb(48, 48, 240)'
                         }}
                     ></i>
-                    <div className={clsx(styles.inforContent)}>Nguyễn Văn Tùng</div>
+                    <div className={clsx(styles.inforContent)}>{myTrainer.name}</div>
                 </div>
 
             </Link>
 
             {
-                !trainer &&
+                admin &&  
                 <div className={clsx(styles.updateField)}>
                     <div className={clsx(styles.inforField, styles.editField)}>
                         <i class={clsx(styles.editIcon, "fas fa-edit")}></i>
-                        <Link to={`detail/${infor.id}`} className={clsx(styles.updateContent, styles.edit)}>
+                        <Link to={`/admin/customers/detail/${infor.id}`} className={clsx(styles.updateContent, styles.edit)}>
                             Sửa
                         </Link>
                     </div>
@@ -150,7 +176,23 @@ function CustomerItem({ infor, trainer }) {
                 </div>
             }
 
+            {
+                trainer && 
+                <div className={clsx(styles.updateField)}>
+                    <div className={clsx(styles.inforField, styles.editField)}>
+                        <i class={clsx(styles.editIcon, "fas fa-clock")}></i>
+                        <div
+                            className={clsx(styles.updateContent, styles.edit)}
+                            onClick={() => setMakeSchedule(prev => !prev)}
+                        >
+                            Lên lịch
+                        </div>
+                    </div>
+                </div>
+            }
+
             <Popup trigger={showPopup} message="Thành công" />
+            {makeSchedule && <MakeSchedule infor={infor}/>}
         </div>
     )
 }

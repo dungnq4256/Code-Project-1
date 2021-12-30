@@ -37,7 +37,7 @@ function CustomerList() {
                     </div>
                 </div>
                 {
-                    customers.map(customer => <CustomerItem infor={customer}/>)
+                    customers.map(customer => <CustomerItem infor={customer} admin/>)
                 }
             </div>
         </div>

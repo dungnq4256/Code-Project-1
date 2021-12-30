@@ -12,7 +12,7 @@ function TrainerPage() {
                 <div className="grid">
                     <div className="row">
                         <div className="col l-10 l-o-1">
-                            <TrainerDetail />
+                            <TrainerDetail admin={false} trainer={true}/>
                         </div>
                     </div>
                 </div>

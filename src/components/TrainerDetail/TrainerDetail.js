@@ -7,10 +7,11 @@ import styles from './TrainerDetail.module.css'
 import TrainerInfor from '../TrainerInfor/TrainerInfor'
 import axiosClient from '../../api/axiosClient'
 
-function TrainerDetail({ admin }) {
+function TrainerDetail({ admin, trainer }) {
     const { id } = useParams();
     let [trainerUsename, setTrainerUsename] = useState('');
     let [customers, setCustomers] = useState([]);
+    let [events, setEvents] = useState([]);
 
 
     // Get usename của trainer
@@ -38,6 +39,25 @@ function TrainerDetail({ admin }) {
         })()
     }, [trainerUsename])
 
+    // Get events của trainers
+    useEffect(() => {
+        customers.forEach(customer => {
+            (async () => {
+                const url = 'https://61bca039d8542f00178248c3.mockapi.io/api/schedules'
+                const response = await axiosClient.get(url);
+                console.log(response);
+                let temp = response.filter(schedule => {
+                    return schedule.username == customer.username;
+                })
+                setEvents(prev => ([
+                    ...prev,
+                    ...temp
+                ]));
+                console.log(events);
+            })()
+        })
+    }, [customers])
+
     return (
         <div className={clsx(styles.wrapper)}>
             {admin && <AdminHeader heading="Thông tin huấn luyện viên" />}
@@ -49,13 +69,13 @@ function TrainerDetail({ admin }) {
 
                 <section className={clsx(styles.contentField)}>
                     <h2 className={clsx(styles.heading)}>Lịch huấn luyện</h2>
-                    <Schedule />
+                    <Schedule eventsFinded={events}/>
                 </section>
 
                 <section className={clsx(styles.contentField)}>
                     <h2 className={clsx(styles.heading)}>Danh sách học viên</h2>
                     {
-                        customers.map(customer => <CustomerItem infor={customer} trainer />)
+                        customers.map(customer => <CustomerItem infor={customer} admin={admin} trainer={trainer}/>)
                     }
                 </section>
             </div>

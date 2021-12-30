@@ -136,6 +136,9 @@
     font-size: 16px;
     font-weight: 400;
     color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .header-user-icon {
